@@ -1,3 +1,4 @@
+import 'package:api_app_project/cache/cache_helper.dart';
 import 'package:api_app_project/core/api/api_consumer.dart';
 import 'package:api_app_project/core/api/dio_consumer.dart';
 import 'package:api_app_project/cubit/user_cubit.dart';
@@ -7,7 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(BlocProvider(create: (BuildContext context) => UserCubit(api: DioConsumer(Dio())),
+  WidgetsFlutterBinding.ensureInitialized();
+  CacheHelper().init();
+  runApp
+
+    (BlocProvider(create: (BuildContext context) => UserCubit(DioConsumer(Dio())),
   child: const MyApp()));
 }
 class MyApp extends StatelessWidget {
