@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:api_app_project/core/images/images.dart';
 import 'package:api_app_project/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,7 @@ class LogInScreen extends StatelessWidget {
             backgroundColor: const Color(0xffEEF1F3),
             body: Column(
               children: [
-                Image.asset('assets/images/image.png'),
+                Image.asset(Images.SignInImage),
                 Expanded(
                   child: Container(
                     decoration: const BoxDecoration(

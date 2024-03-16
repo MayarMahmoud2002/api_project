@@ -13,5 +13,17 @@ class SignInFailure extends UserState
   SignInFailure({required this.error});
 }
 
+class SignUpSuccess extends UserState
+{
+
+}
+class SignUpLoading extends UserState {}
+class SignUpFailure extends UserState
+{
+  final String error;
+
+  SignUpFailure({required this.error});
+}
+
 
 

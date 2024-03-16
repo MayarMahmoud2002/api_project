@@ -1,31 +1,11 @@
-//
-//
-//
-// class EndPoints
-// {
-//   static String baseUrl = 'https://food-api-omega.vercel.app/api/v1/';
-//   static String signInUrl = '${baseUrl}user/signin';
-//   static String signUpUrl = '${baseUrl}user/signup';
-//   static String checkEmail = '${baseUrl}user/check-email';
-//   static String updateUserUrl = '${baseUrl}user/update';
-//   static String logOutUrl = '${baseUrl}user/logout';
-//
-// }
-//
-// class ApiKey
-// {
-//   static String status = 'status';
-//   static String errorMessage = 'ErrorMessage';
-//   static String email = 'email';
-//   static String password = 'password';
-//   static String token = 'token';
-//   static String id = 'id';
-// }
+
 
 class EndPoints
 {
   static String baseUrl = 'https://food-api-omega.vercel.app/api/v1/';
   static String signInUrl = '${baseUrl}user/signin';
+  static String signUpUrl = '${baseUrl}user/signup';
+
 }
 
 class ApiKeys
@@ -36,4 +16,13 @@ class ApiKeys
   static String passwordKey = 'password';
   static String tokenKey = 'token';
   static String userIdKey = 'id';
+  static String messageKey = 'message';
+  static String nameKey = 'name';
+  static String phoneKey = 'phone';
+  static String confirmPasswordKey = 'confirmPassword';
+  static String locationKey = 'location';
+
+
+
+
 }

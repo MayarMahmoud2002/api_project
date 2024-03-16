@@ -6,8 +6,10 @@ class SignInModel {
 
   SignInModel({required this.message, required this.token});
 
+
   factory SignInModel.fromJson(Map<String, dynamic> jsonData) {
     return SignInModel(
-        message: ApiKeys.errorMessageKey, token: ApiKeys.tokenKey);
+        message: jsonData[ApiKeys.messageKey],
+        token: jsonData[ApiKeys.tokenKey]);
   }
 }
