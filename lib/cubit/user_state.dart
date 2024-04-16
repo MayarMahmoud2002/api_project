@@ -8,22 +8,37 @@ class SignInLoading extends UserState {}
 class SignInSuccess extends UserState {}
 class SignInFailure extends UserState
 {
-  final String error;
+   final String errorMessage;
 
-  SignInFailure({required this.error});
+   SignInFailure({required this.errorMessage});
 }
-
+//--------------------------------------------
+class SignUpLoading extends UserState {}
 class SignUpSuccess extends UserState
 {
+   final String message;
 
+   SignUpSuccess({required this.message});
 }
-class SignUpLoading extends UserState {}
 class SignUpFailure extends UserState
 {
-  final String error;
+   final String errorMessage;
 
-  SignUpFailure({required this.error});
+   SignUpFailure({required this.errorMessage});
 }
 
+//---------------------------------------------
+class UserProfileLoading extends UserState {}
+class UserProfileSuccess extends UserState
+{
+   final UserModel user;
 
+   UserProfileSuccess({required this.user});
+}
+class UserProfileFailure extends UserState
+{
+   final String errorMessage;
+
+   UserProfileFailure({required this.errorMessage});
+}
 

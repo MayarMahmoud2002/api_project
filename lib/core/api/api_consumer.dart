@@ -1,51 +1,35 @@
 abstract class ApiConsumer {
-  Future<dynamic> post(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParams,
-  });
 
-  Future<dynamic> get(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParams,
-  });
+  Future <dynamic> get(String path,
+      {
+        Object? data,
+        Map<String, dynamic> queryParams,
 
-  Future<dynamic> delete(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParams,
-  });
+      });
 
-  Future<dynamic> patch(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParams,
-  });
+  Future <dynamic> post(String path,
+      {
+        dynamic data,
+        Map<String, dynamic> queryParams,
+        bool isFormData = false,
+
+      });
+
+  Future <dynamic> patch(String path,
+      {
+        dynamic data,
+        Map<String, dynamic> queryParams,
+        bool isFormData = false,
+
+
+      });
+
+  Future <dynamic> delete(String path,
+      {
+        dynamic data,
+        Map<String, dynamic> queryParams,
+        bool isFormData = false,
+
+
+      });
 }
-
-// abstract class ApiConsumer {
-//   Future<dynamic> post(
-//     String path, {
-//     dynamic data,
-//     Map<String, dynamic>? queryParams,
-//   });
-//
-//   Future<dynamic> get(
-//     String path, {
-//     dynamic data,
-//     Map<String, dynamic>? queryParams,
-//   });
-//
-//   Future<dynamic> delete(
-//     String path, {
-//     dynamic data,
-//     Map<String, dynamic>? queryParams,
-//   });
-//
-//   Future<dynamic> patch(
-//     String path, {
-//     dynamic data,
-//     Map<String, dynamic>? queryParams,
-//   });
-// }

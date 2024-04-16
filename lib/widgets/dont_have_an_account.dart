@@ -17,23 +17,23 @@ class DontHaveAnAccountWidget extends StatelessWidget {
                 color: Color(0xff939393),
                 fontWeight: FontWeight.bold),
           ),
-          GestureDetector(
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SignUpScreen(),
-                ),
-              )
-            },
-            child: const Text(
-              'Sign-up',
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Color(0xff748288),
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () => {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => const SignUpScreen(),
+          //       ),
+          //     )
+          //   },
+          //   child: const Text(
+          //     'Sign-up',
+          //     style: TextStyle(
+          //         fontSize: 15,
+          //         color: Color(0xff748288),
+          //         fontWeight: FontWeight.bold),
+          //   ),
+          // ),
         ],
       ),
     );

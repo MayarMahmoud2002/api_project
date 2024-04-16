@@ -1,81 +1,107 @@
 import 'package:api_app_project/core/api/dio_consumer.dart';
+import 'package:api_app_project/core/api/end_points.dart';
 import 'package:api_app_project/core/errors/exceptions.dart';
+import 'package:api_app_project/models/signIn_model.dart';
+import 'package:api_app_project/models/signUp_model.dart';
+import 'package:api_app_project/models/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import '../core/api/end_points.dart';
-import '../models/signIn_model.dart';
-import 'package:images_picker/images_picker.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:meta/meta.dart';
 
 part 'user_state.dart';
-
 
 class UserCubit extends Cubit<UserState> {
   UserCubit(this.api) : super(UserInitial());
   final DioConsumer api;
-
-  GlobalKey<FormState> signInFormKey = GlobalKey();
-  TextEditingController signInPassword = TextEditingController();
-  TextEditingController signInEmail = TextEditingController();
-
-  GlobalKey<FormState> signUpFormKey = GlobalKey();
-  TextEditingController signUpName = TextEditingController();
-  TextEditingController signUpPhone = TextEditingController();
-  TextEditingController signUpEmail = TextEditingController();
-  TextEditingController signUpPassword = TextEditingController();
-  TextEditingController signUpConfirmPassword = TextEditingController();
-
-
   SignInModel? user;
+  SignUpModel? userSignUp;
 
-  Future SignIn() async {
+  GlobalKey <FormState> signInForm =  GlobalKey();
+  TextEditingController emailSignIn = TextEditingController();
+  TextEditingController passwordSignIn = TextEditingController();
+  //******************************************************************
+  GlobalKey <FormState> signUpForm =  GlobalKey();
+  TextEditingController nameSignUp = TextEditingController();
+  TextEditingController emailSignUp = TextEditingController();
+  TextEditingController phoneNumberSignUp = TextEditingController();
+  TextEditingController passwordSignUp = TextEditingController();
+  TextEditingController confirmPasswordSignUp = TextEditingController();
+
+
+
+  Future SignIn() async
+  {
     try {
       emit(SignInLoading());
       final response = await api.post(EndPoints.signInUrl, data:
       {
-        ApiKeys.emailKey: signInEmail.text,
-        ApiKeys.passwordKey: signInPassword.text,
+        ApiKeys.email: emailSignIn.text,
+        ApiKeys.password : passwordSignIn.text,
       });
-      print(response);
       emit(SignInSuccess());
-    } on ServerExceptions catch (e) {
-      emit(SignInFailure(error: e.errorModel.toString()));
+      print (response);
+
+      user = SignInModel.fromJson(response);
+     final DecodedToken = JwtDecoder.decode(user!.token);
+     final id = DecodedToken['id'];
+      final role = DecodedToken['role'];
+      print ("your id is ${id}");
+      print ("your role is ${role}");
+
+    }on ServerExceptions catch (e)
+    {
+      emit(SignInFailure(errorMessage: e.errorModel.errorMessage));
+      print (e.toString());
     }
   }
-
-  Future SignUp() async {
+  Future SignUp() async
+  {
     try {
-      emit(SignInLoading());
-     final response =  await api.post(EndPoints.signUpUrl,
-        isFormData: true,
-        data :
-        {
-          ApiKeys.nameKey : signUpName.text,
-          ApiKeys.emailKey : signUpEmail.text,
-          ApiKeys.phoneKey : signUpPhone.text,
-          ApiKeys.passwordKey : signUpPassword.text,
-          ApiKeys.confirmPasswordKey : signUpPassword.text,
-          ApiKeys.locationKey : '{"name":"methalfa","address":"meet halfa","coordinates":[30.1572709,31.224779]}',
-
-        }
+      emit(SignUpLoading());
+      final response = await api.post(EndPoints.signUpUrl,
+          isFormData: true,
+          data:
+          {
+            ApiKeys.name = nameSignUp.text,
+            ApiKeys.email = emailSignUp.text,
+            ApiKeys.phone = phoneNumberSignUp.text,
+            ApiKeys.password = passwordSignUp.text,
+            ApiKeys.confirmPassword = confirmPasswordSignUp.text,
+            ApiKeys.location = '{"name":"methalfa","address":"meet halfa","coordinates":[30.1572709,31.224779]}',
+          }
       );
-      // final SignUpModel = SignInModel.fromJson(response);
-      emit(SignUpSuccess());
-    }
-    on ServerExceptions catch (e)
+      emit(SignInSuccess());
+      print(response);
+      userSignUp = SignUpModel.fromJson(response) ;
+      print ('the user for SignUp ${userSignUp}');
+    } on ServerExceptions catch (e)
     {
-      emit(SignUpFailure(error: e.errorModel.toString()));
+      emit(SignInFailure(errorMessage: e.errorModel.errorMessage));
+      print (e.toString());
+
+    }}
+  Future UserProfile () async
+  {
+    try {
+      emit(UserProfileLoading());
+      //put cache helper for id
+      final response = api.get(EndPoints.getUserData(id),
+          data:
+          {
+
+          }
+      );
+      emit(UserProfileSuccess(user: UserModel.fromJson(response as Map<String, dynamic>)));
+    }on ServerExceptions catch(e)
+    {
+      emit(UserProfileFailure(errorMessage: e.errorModel.errorMessage));
     }
+
+
+    
   }
 
 }
 
-//    final DecodedToken = JwtDecoder.decode(user!.token);
-//    print (DecodedToken['id']);
-//    CacheHelper().saveData(key: ApiKeys.tokenKey, value: user!.token);
-//    CacheHelper().saveData(key: ApiKeys.userIdKey, value:DecodedToken[ApiKeys.userIdKey]);
-//if (response !=null)
-//       {
-//         user =  SignInModel.fromJson(response);
-//         print (user);
-//         emit(SignInSuccess());
-//       }
+

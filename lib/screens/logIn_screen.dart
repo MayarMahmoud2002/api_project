@@ -1,6 +1,6 @@
-import 'dart:math';
 import 'package:api_app_project/core/images/images.dart';
 import 'package:api_app_project/cubit/user_cubit.dart';
+import 'package:api_app_project/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/custom_form_button.dart';
@@ -17,9 +17,13 @@ class LogInScreen extends StatelessWidget {
         if (state is SignInSuccess)
         {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login Success')));
+          context.read<UserCubit>().UserProfile();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)=> ProfileScreen()),
+          );
         }else if (state is SignInFailure)
         {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login Failure')));
         }
       },
       builder: (context, state) {
@@ -41,7 +45,7 @@ class LogInScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Form(
-                          key: context.read<UserCubit>().signInFormKey,
+                          key: context.read<UserCubit>().signInForm,
                           child: Column(
                             children: [
                               // const PageHeading(title: 'Sign-in'),
@@ -49,21 +53,20 @@ class LogInScreen extends StatelessWidget {
                               CustomInputField(
                                 labelText: 'Email',
                                 hintText: 'Your email',
-                                controller: context.read<UserCubit>().signInEmail,
-
+                                controller:context.read<UserCubit>().emailSignIn ,
                               ),
                               const SizedBox(height: 16),
-                              //!Password
                               CustomInputField(
                                 labelText: 'Password',
                                 hintText: 'Your password',
                                 obscureText: true,
                                 suffixIcon: true,
-                                controller: context.read<UserCubit>().signInPassword,
+                                controller:context.read<UserCubit>().passwordSignIn ,
                               ),
                               const SizedBox(height: 16),
                               const SizedBox(height: 20),
-                              state is SignInLoading ? CircularProgressIndicator() : CustomFormButton(
+                              state is SignInLoading ? CircularProgressIndicator() :
+                              CustomFormButton(
                                 innerText: 'Sign In',
                                 onPressed: ()
                                 {

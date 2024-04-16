@@ -16,23 +16,24 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserCubit, UserState>(
-      listener: (context, state) {
-        if (state is SignUpFailure)
-        {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text (e.toString())));
-        }else if (state is SignUpSuccess)
-        {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text ('Sign Up Success')));
-        }
-      },
-      builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
+    return SafeArea(
+      child: BlocConsumer<UserCubit, UserState>(
+        listener: (context, state) {
+          if (state is SignUpFailure)
+          {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+          } else if (state is SignUpSuccess )
+          {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('SignUp Success')));
+          }
+
+        },
+        builder: (context, state) {
+          return Scaffold(
             backgroundColor: const Color(0xffEEF1F3),
             body: SingleChildScrollView(
               child: Form(
-                key: context.read<UserCubit>().signUpFormKey,
+                key: context.read<UserCubit>().signUpForm,
                 child: Column(
                   children: [
                     // const PageHeader(),
@@ -44,7 +45,7 @@ class SignUpScreen extends StatelessWidget {
                       labelText: 'Name',
                       hintText: 'Your name',
                       isDense: true,
-                      controller: context.read<UserCubit>().signUpName,
+                      controller: context.read<UserCubit>().nameSignUp,
 
                     ),
                     const SizedBox(height: 16),
@@ -53,7 +54,8 @@ class SignUpScreen extends StatelessWidget {
                       labelText: 'Email',
                       hintText: 'Your email',
                       isDense: true,
-                      controller: context.read<UserCubit>().signUpEmail,
+                      controller: context.read<UserCubit>().emailSignUp,
+
 
                     ),
                     const SizedBox(height: 16),
@@ -62,7 +64,8 @@ class SignUpScreen extends StatelessWidget {
                       labelText: 'Phone number',
                       hintText: 'Your phone number ex:01234567890',
                       isDense: true,
-                      controller: context.read<UserCubit>().signUpPhone,
+                      controller: context.read<UserCubit>().phoneNumberSignUp,
+
 
                     ),
                     const SizedBox(height: 16),
@@ -73,7 +76,8 @@ class SignUpScreen extends StatelessWidget {
                       isDense: true,
                       obscureText: true,
                       suffixIcon: true,
-                      controller: context.read<UserCubit>().signUpPassword,
+                      controller: context.read<UserCubit>().passwordSignUp,
+
 
                     ),
                     CustomInputField(
@@ -82,28 +86,29 @@ class SignUpScreen extends StatelessWidget {
                       isDense: true,
                       obscureText: true,
                       suffixIcon: true,
-                      controller: context.read<UserCubit>().signUpConfirmPassword,
+                      controller: context.read<UserCubit>().confirmPasswordSignUp,
+
 
                     ),
                     const SizedBox(height: 22),
-                    state is SignInLoading?CircularProgressIndicator() :
+                    state is SignUpLoading ? CircularProgressIndicator() :
                     CustomFormButton(
                       innerText: 'Signup',
-                      onPressed: () {
+                      onPressed: ()
+                      {
                         context.read<UserCubit>().SignUp();
                       },
                     ),
                     const SizedBox(height: 18),
-                    //! Already have an account widget
                     const AlreadyHaveAnAccountWidget(),
                     const SizedBox(height: 30),
                   ],
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
