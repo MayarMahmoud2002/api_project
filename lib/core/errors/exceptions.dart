@@ -45,6 +45,6 @@ void HandleExceptions (e)
     case DioExceptionType.connectionError:
       throw ServerExceptions(errorModel: ErrorModel.fromJson(e.response!.data));
     case DioExceptionType.unknown:
-      throw ServerExceptions(errorModel: ErrorModel.fromJson(e.response!.data));
+      throw ServerExceptions(errorModel: ErrorModel.fromJson(e.response.data));
   }
 }

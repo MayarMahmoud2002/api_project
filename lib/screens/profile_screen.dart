@@ -18,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          body:state is UserProfileLoading ? CircularProgressIndicator() :
+          body:state is UserProfileLoading ? Center(child: CircularProgressIndicator()) :
 
           state is UserProfileSuccess? ListView(
             children: [
